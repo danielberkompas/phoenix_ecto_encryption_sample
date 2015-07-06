@@ -15,3 +15,6 @@ config :encryption, Encryption.Repo,
   database: "encryption_test",
   pool: Ecto.Adapters.SQL.Sandbox, # Use a sandbox for transactional testing
   size: 1
+
+config :encryption, Encryption.AES,
+  key: :base64.decode("vA/K/7K6Z3obnTxlPx6fDuy/tiPj4FS7dDtUpfvRbG4=")
