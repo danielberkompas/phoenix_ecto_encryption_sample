@@ -33,4 +33,8 @@ config :encryption, Encryption.Repo,
   size: 10 # The amount of database connections in the pool
 
 config :encryption, Encryption.AES,
-  key: :base64.decode("vA/K/7K6Z3obnTxlPx6fDuy/tiPj4FS7dDtUpfvRbG4=")
+  keys: %{
+    <<1>> => :base64.decode("vA/K/7K6Z3obnTxlPx6fDuy/tiPj4FS7dDtUpfvRbG4="),
+    <<2>> => :base64.decode("Vnx9YGmqSHx9nTc3lVQxRwYS0A8Fks7fGzuMLZISl30=")
+  },
+  default: <<1>>

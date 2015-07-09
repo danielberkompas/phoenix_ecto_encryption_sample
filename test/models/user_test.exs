@@ -28,6 +28,7 @@ defmodule Encryption.UserTest do
     assert user.name  == @valid_attrs.name
     assert user.email == @valid_attrs.email
     assert user.email_hash == Encryption.HashField.hash(@valid_attrs.email)
+    assert user.encryption_key_id == <<1>>
   end
 
   test "inserting a user updates the :email_hash field" do

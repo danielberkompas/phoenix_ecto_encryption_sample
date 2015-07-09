@@ -5,13 +5,13 @@ defmodule Encryption.User do
     field :name, Encryption.EncryptedField
     field :email, Encryption.EncryptedField
     field :email_hash, Encryption.HashField
+    field :encryption_key_id, :binary
 
     timestamps
   end
 
-  # Ensure that hashed fields never get out of date
-  before_insert :set_hashed_fields
-  before_update :set_hashed_fields
+  before_insert :set_defaults
+  before_update :set_defaults
 
   @required_fields ~w(name email)
   @optional_fields ~w()
@@ -25,12 +25,13 @@ defmodule Encryption.User do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
-    |> set_hashed_fields
+    |> set_defaults
     |> validate_unique(:email_hash, on: Encryption.Repo)
   end
 
-  defp set_hashed_fields(changeset) do
+  defp set_defaults(changeset) do
     changeset
     |> put_change(:email_hash, get_field(changeset, :email))
+    |> put_change(:encryption_key_id, Encryption.AES.key_id)
   end
 end
